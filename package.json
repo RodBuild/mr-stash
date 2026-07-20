@@ -11,6 +11,8 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "lint": "turbo lint",
+    "deploy:prod": "npx vercel deploy --prod --yes",
+    "deploy:targets": "npx vercel target list",
     "clean": "rm -rf node_modules .turbo apps/*/node_modules apps/*/.next packages/*/node_modules && npm install",
     "storybook:ui": "npx turbo storybook --filter=@mr-stash/ui",
     "storybook:build": "npx turbo build-storybook --filter=@mr-stash/ui"

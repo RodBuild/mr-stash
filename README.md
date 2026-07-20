@@ -29,8 +29,18 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deployments
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The Vercel project deploys this monorepo from the repository root and builds the web app in `apps/web`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Deploy directly to production and alias the production domains.
+npm run deploy:prod
+
+# Show available Vercel deployment targets.
+npm run deploy:targets
+```
+
+Pull requests and non-production branches should continue to use Vercel preview deployments from the Git integration.
+
+`npm run deploy:prod` deploys to the live production domains, including `www.mrstash.org`.

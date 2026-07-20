@@ -2,13 +2,29 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import acceptLanguage from "accept-language-parser"
 import { fallbackLng, languages, cookieName } from "./i18n/settings"
+import { isBlockedCrawler } from "./config/crawler-policy"
+
+const aiOptOutHeader = "noai, noimageai"
+
+function withCrawlerPolicyHeaders(response: NextResponse) {
+  response.headers.set("X-Robots-Tag", aiOptOutHeader)
+  return response
+}
 
 export const config = {
-  // Matcher ignoring `/_next/` and `/api/`
-  matcher: ["/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)"],
+  // Matcher ignoring framework assets and root metadata files.
+  matcher: [
+    "/((?!api|_next/static|_next/image|assets|favicon.ico|robots.txt|sitemap.xml|sw.js).*)",
+  ],
 }
 
 export function middleware(req: NextRequest) {
+  if (isBlockedCrawler(req.headers.get("user-agent"))) {
+    return withCrawlerPolicyHeaders(
+      new NextResponse("Crawler access denied", { status: 403 }),
+    )
+  }
+
   let lng
   if (req.cookies.has(cookieName))
     lng = acceptLanguage.pick(
@@ -27,8 +43,8 @@ export function middleware(req: NextRequest) {
     !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
     !req.nextUrl.pathname.startsWith("/_next")
   ) {
-    return NextResponse.redirect(
-      new URL(`/${lng}${req.nextUrl.pathname}`, req.url),
+    return withCrawlerPolicyHeaders(
+      NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url)),
     )
   }
 
@@ -40,8 +56,8 @@ export function middleware(req: NextRequest) {
     )
     const response = NextResponse.next()
     if (lngInReferer) response.cookies.set(cookieName, lngInReferer)
-    return response
+    return withCrawlerPolicyHeaders(response)
   }
 
-  return NextResponse.next()
+  return withCrawlerPolicyHeaders(NextResponse.next())
 }

@@ -1,0 +1,8 @@
+@layer components {
+  .ui-label {
+    color: hsl(var(--foreground));
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    line-height: var(--text-body-sm--line-height);
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "@mr-stash/flags",
+  "version": "1.0.0",
+  "main": "index.tsx",
+  "dependencies": {
+    "@harnessio/ff-react-client-sdk": "latest"
+  }
+}

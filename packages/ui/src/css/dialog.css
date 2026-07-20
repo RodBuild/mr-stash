@@ -1,0 +1,99 @@
+@layer components {
+  .ui-dialog-root {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    pointer-events: none;
+  }
+
+  .ui-dialog-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: rgb(0 0 0 / 0.3);
+    backdrop-filter: blur(4px);
+    pointer-events: auto;
+  }
+
+  .ui-dialog-panel {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    max-height: calc(100vh - 2rem);
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius-lg);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    pointer-events: auto;
+    box-shadow:
+      0 20px 25px -5px rgb(0 0 0 / 0.1),
+      0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
+
+  .ui-dialog-panel[data-size="sm"] {
+    width: min(calc(100vw - 2rem), 24rem);
+  }
+
+  .ui-dialog-panel[data-size="md"] {
+    width: min(calc(100vw - 2rem), 32rem);
+  }
+
+  .ui-dialog-panel[data-size="lg"] {
+    width: min(calc(100vw - 2rem), 42rem);
+  }
+
+  .ui-dialog-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid hsl(var(--border));
+    padding: 0.75rem 1rem;
+  }
+
+  .ui-dialog-heading {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .ui-dialog-title {
+    margin: 0;
+    color: hsl(var(--foreground));
+    font-size: var(--text-body-lg);
+    font-weight: 650;
+    line-height: var(--text-body-lg--line-height);
+  }
+
+  .ui-dialog-description {
+    margin: 0;
+    color: hsl(var(--muted-foreground));
+    font-size: var(--text-body-sm);
+    line-height: var(--text-body-sm--line-height);
+  }
+
+  .ui-dialog-close {
+    flex-shrink: 0;
+  }
+
+  .ui-dialog-body {
+    flex: 1;
+    overflow: auto;
+    padding: 1rem;
+  }
+
+  .ui-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    border-top: 1px solid hsl(var(--border));
+    padding: 0.75rem 1rem;
+  }
+}

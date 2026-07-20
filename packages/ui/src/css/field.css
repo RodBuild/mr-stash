@@ -1,0 +1,31 @@
+@layer components {
+  .ui-field {
+    --field-error-fg: hsl(var(--destructive));
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  [data-theme="dark"] .ui-field {
+    --field-error-fg: color-mix(
+      in oklab,
+      hsl(var(--destructive)) 35%,
+      hsl(var(--foreground))
+    );
+  }
+
+  .ui-field-hint {
+    margin: 0;
+    color: hsl(var(--muted-foreground));
+    font-size: var(--text-body-xs);
+    line-height: var(--text-body-xs--line-height);
+  }
+
+  .ui-field-error {
+    margin: 0;
+    color: var(--field-error-fg);
+    font-size: var(--text-body-xs);
+    line-height: var(--text-body-xs--line-height);
+  }
+}

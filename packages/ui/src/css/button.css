@@ -1,0 +1,234 @@
+@theme {
+  --text-button-sm: var(--text-body-sm);
+  --text-button-sm--line-height: var(--text-body-sm--line-height);
+
+  --text-button-md: var(--text-body-sm);
+  --text-button-md--line-height: var(--text-body-sm--line-height);
+
+  --text-button-lg: var(--text-body-md);
+  --text-button-lg--line-height: var(--text-body-md--line-height);
+}
+
+@layer components {
+  .ui-button {
+    --button-bg: transparent;
+    --button-border: transparent;
+    --button-border-width: 1px;
+    --button-fg: hsl(var(--foreground));
+    --button-hover-bg: transparent;
+    --button-hover-border: var(--button-border);
+    --button-hover-fg: var(--button-fg);
+    --button-focus-ring: hsl(var(--ring));
+    --button-disabled-bg: hsl(var(--muted));
+    --button-disabled-border: hsl(var(--border));
+    --button-disabled-fg: hsl(var(--muted-foreground));
+    --button-disabled-ring: color-mix(
+      in oklab,
+      hsl(var(--muted-foreground)) 45%,
+      transparent
+    );
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    vertical-align: middle;
+    border: var(--button-border-width) solid var(--button-border);
+    border-radius: var(--radius-md);
+    background-color: var(--button-bg);
+    color: var(--button-fg);
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease,
+      opacity 150ms ease,
+      box-shadow 150ms ease,
+      filter 150ms ease;
+  }
+
+  .ui-button:not([data-disabled="true"]):hover {
+    border-color: var(--button-hover-border);
+    background-color: var(--button-hover-bg);
+    color: var(--button-hover-fg);
+  }
+
+  .ui-button:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px hsl(var(--background)),
+      0 0 0 4px var(--button-focus-ring);
+  }
+
+  .ui-button svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+
+  .ui-button[data-variant="primary"] {
+    --button-bg: hsl(var(--primary));
+    --button-border: hsl(var(--primary));
+    --button-fg: hsl(var(--primary-foreground));
+    --button-hover-bg: color-mix(
+      in oklab,
+      hsl(var(--primary)) 90%,
+      transparent
+    );
+    --button-hover-border: var(--button-hover-bg);
+    --button-hover-fg: hsl(var(--primary-foreground));
+    --button-focus-ring: hsl(var(--primary));
+  }
+
+  .ui-button[data-variant="secondary"] {
+    --button-bg: hsl(var(--secondary));
+    --button-border: hsl(var(--secondary));
+    --button-fg: hsl(var(--secondary-foreground));
+    --button-hover-bg: color-mix(
+      in oklab,
+      hsl(var(--secondary)) 90%,
+      transparent
+    );
+    --button-hover-border: var(--button-hover-bg);
+    --button-hover-fg: hsl(var(--secondary-foreground));
+    --button-focus-ring: hsl(var(--secondary));
+  }
+
+  .ui-button[data-variant="destructive"] {
+    --button-bg: hsl(var(--destructive));
+    --button-border: hsl(var(--destructive));
+    --button-fg: hsl(var(--destructive-foreground));
+    --button-hover-bg: color-mix(
+      in oklab,
+      hsl(var(--destructive)) 90%,
+      transparent
+    );
+    --button-hover-border: var(--button-hover-bg);
+    --button-hover-fg: hsl(var(--destructive-foreground));
+    --button-focus-ring: hsl(var(--destructive));
+  }
+
+  .ui-button[data-variant="outline"] {
+    --button-bg: hsl(var(--background));
+    --button-border: hsl(var(--input));
+    --button-border-width: 2px;
+    --button-fg: hsl(var(--foreground));
+    --button-hover-bg: hsl(var(--accent));
+    --button-hover-border: color-mix(
+      in oklab,
+      hsl(var(--muted-foreground)) 40%,
+      hsl(var(--border))
+    );
+    --button-hover-fg: hsl(var(--accent-foreground));
+  }
+
+  .ui-button[data-variant="ghost"] {
+    --button-border: transparent;
+    --button-fg: hsl(var(--foreground));
+    --button-hover-bg: hsl(var(--accent));
+    --button-hover-border: transparent;
+    --button-hover-fg: hsl(var(--accent-foreground));
+  }
+
+  .ui-button[data-variant="link"] {
+    --button-border: transparent;
+    --button-fg: hsl(var(--primary));
+    --button-hover-fg: hsl(var(--primary));
+    --button-focus-ring: hsl(var(--primary));
+
+    height: auto;
+    padding: 0;
+    background-color: transparent;
+    text-underline-offset: 4px;
+  }
+
+  .ui-button[data-variant="link"]:hover {
+    background-color: transparent;
+    text-decoration-line: underline;
+  }
+
+  .ui-button[data-size="sm"] {
+    height: 2.25rem;
+    padding-inline: 0.75rem;
+    font-size: var(--text-button-sm);
+    line-height: var(--text-button-sm--line-height);
+  }
+
+  .ui-button[data-size="md"] {
+    height: 2.5rem;
+    padding-inline: 1rem;
+    font-size: var(--text-button-md);
+    line-height: var(--text-button-md--line-height);
+  }
+
+  .ui-button[data-size="lg"] {
+    height: 2.75rem;
+    padding-inline: 1.5rem;
+    font-size: var(--text-button-lg);
+    line-height: var(--text-button-lg--line-height);
+  }
+
+  .ui-button[data-size="icon"] {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+  }
+
+  .ui-button[data-icon-only="true"][data-size="sm"] {
+    width: 2.25rem;
+    padding-inline: 0;
+  }
+
+  .ui-button[data-icon-only="true"][data-size="md"] {
+    width: 2.5rem;
+    padding-inline: 0;
+  }
+
+  .ui-button[data-icon-only="true"][data-size="lg"] {
+    width: 2.75rem;
+    padding-inline: 0;
+  }
+
+  .ui-button[data-disabled="true"] {
+    color: var(--button-disabled-fg);
+    cursor: not-allowed;
+    opacity: 0.72;
+    filter: saturate(0.55);
+    text-decoration-line: none;
+  }
+
+  .ui-button[data-disabled="true"][data-variant="primary"],
+  .ui-button[data-disabled="true"][data-variant="secondary"],
+  .ui-button[data-disabled="true"][data-variant="destructive"] {
+    border-width: 1px;
+    border-color: var(--button-disabled-border);
+    background-color: var(--button-disabled-bg);
+  }
+
+  .ui-button[data-disabled="true"][data-variant="outline"] {
+    border-width: 2px;
+    border-color: var(--button-disabled-border);
+    background-color: transparent;
+  }
+
+  .ui-button[data-disabled="true"][data-variant="ghost"] {
+    border-width: 1px;
+    border-color: transparent;
+    background-color: transparent;
+  }
+
+  .ui-button[data-disabled="true"][data-variant="link"] {
+    border-width: 1px;
+    border-color: transparent;
+    background-color: transparent;
+  }
+
+  .ui-button[data-disabled="true"]:focus-visible {
+    box-shadow:
+      0 0 0 2px hsl(var(--background)),
+      0 0 0 4px var(--button-disabled-ring);
+  }
+}

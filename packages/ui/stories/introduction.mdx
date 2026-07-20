@@ -1,0 +1,71 @@
+import { Meta, Title, Subtitle } from "@storybook/addon-docs/blocks"
+
+<Meta title="Introduction" />
+
+<Title>Mr Stash UI Component Library</Title>
+<Subtitle>
+  Custom premium, accessible UI components themed in gold and deep dark blue.
+</Subtitle>
+
+---
+
+Welcome to the **Mr Stash** design system and core component library. This library provides premium, production-ready, fully accessible React components engineered with Tailwind CSS and Radix UI primitives.
+
+## Brand Identity
+
+Our design identity is built around a sophisticated **dark mode** aesthetic using deep blue backgrounds paired with sharp gold accent highlights.
+
+### Core Tokens (HSL Values)
+
+| Token            | CSS Variable   | HSL Color     | Description                             |
+| :--------------- | :------------- | :------------ | :-------------------------------------- |
+| **Background**   | `--background` | `210 30% 8%`  | Primary canvas color                    |
+| **Foreground**   | `--foreground` | `210 20% 96%` | Primary text and headings               |
+| **Muted Canvas** | `--muted`      | `210 14% 20%` | Card backgrounds, panels                |
+| **Primary**      | `--primary`    | `210 80% 55%` | Core visual accents, focus states       |
+| **Secondary**    | `--secondary`  | `45 90% 55%`  | Secondary high-contrast buttons, badges |
+| **Border**       | `--border`     | `210 10% 24%` | Clean, subtle grid lines                |
+
+---
+
+## Installation & Setup
+
+All core components are exported from the `@mr-stash/ui` package.
+
+### 1. Import CSS Theme
+
+Ensure your main stylesheet (e.g. `app/globals.css` in Next.js) imports the theme:
+
+```css
+@import "@mr-stash/ui/styles.css";
+```
+
+### 2. Import Components
+
+Import and consume components directly:
+
+```tsx
+import { Button } from "@mr-stash/ui"
+
+export default function HeroSection() {
+  return (
+    <section className="bg-background text-foreground p-8">
+      <h1 className="text-3xl font-bold">Premium Vehicles</h1>
+      <Button tone="primary" className="mt-4">
+        Browse Inventory
+      </Button>
+    </section>
+  )
+}
+```
+
+---
+
+## Accessibility Checklists
+
+We take accessibility seriously. When building or extending components, ensure:
+
+- **Keyboard Navigation**: Buttons and interactive controls must have visible `:focus-visible` ring outlines.
+- **Semantic HTML**: Use proper semantic tags like `<header>`, `<nav>`, `<main>`, and `<article>`.
+- **Motion Design**: Respect user preferences by wrapping animations with `@media (prefers-reduced-motion: reduce)`.
+- **Contrast Compliance**: Contrast ratios for key brand assets and typography must meet WCAG AA requirements.

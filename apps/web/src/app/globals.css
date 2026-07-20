@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+@source "../../../../packages/ui/src";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@import "@mr-stash/ui/styles.css";

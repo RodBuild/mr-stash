@@ -1,0 +1,143 @@
+import {
+  Meta,
+  Title,
+  Subtitle,
+  Canvas,
+  Controls,
+  Story,
+} from "@storybook/addon-docs/blocks"
+import * as ButtonStories from "./button.stories"
+
+<Meta of={ButtonStories} name="Docs" />
+
+<Title>Button</Title>
+<Subtitle>
+  A versatile and accessible button component built with Radix Slot for flexible
+  rendering.
+</Subtitle>
+
+---
+
+## Interactive Playground
+
+Use this section to customize, configure, and play with the button states. The controls table below will dynamically update the live button preview.
+
+<Canvas of={ButtonStories.Default} />
+
+### Configuration Properties
+
+<Controls of={ButtonStories.Default} />
+
+---
+
+{/* ## Variants
+
+Our button design system features six distinct visual variants to match different levels of actions in the hierarchy.
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+  gap: '1.5rem',
+  margin: '1.5rem 0'
+}}>
+  <div style={{ border: '1px solid #222', borderRadius: '8px', padding: '1rem', background: '#0e1217', display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
+    <span style={{ fontSize: '0.8rem', color: '#888', fontWeight: 'bold' }}>Default</span>
+    <Story of={ButtonStories.Default} />
+  </div>
+
+<div
+  style={{
+    border: "1px solid #222",
+    borderRadius: "8px",
+    padding: "1rem",
+    background: "#0e1217",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+    alignItems: "center",
+  }}
+>
+  <span style={{ fontSize: "0.8rem", color: "#888", fontWeight: "bold" }}>
+    Secondary
+  </span>
+  <Story of={ButtonStories.Secondary} />
+</div>
+
+<div
+  style={{
+    border: "1px solid #222",
+    borderRadius: "8px",
+    padding: "1rem",
+    background: "#0e1217",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+    alignItems: "center",
+  }}
+>
+  <span style={{ fontSize: "0.8rem", color: "#888", fontWeight: "bold" }}>
+    Outline
+  </span>
+  <Story of={ButtonStories.Outline} />
+</div>
+
+<div
+  style={{
+    border: "1px solid #222",
+    borderRadius: "8px",
+    padding: "1rem",
+    background: "#0e1217",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+    alignItems: "center",
+  }}
+>
+  <span style={{ fontSize: "0.8rem", color: "#888", fontWeight: "bold" }}>
+    Destructive
+  </span>
+  <Story of={ButtonStories.Destructive} />
+</div>
+
+<div
+  style={{
+    border: "1px solid #222",
+    borderRadius: "8px",
+    padding: "1rem",
+    background: "#0e1217",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5rem",
+    alignItems: "center",
+  }}
+>
+  <span style={{ fontSize: "0.8rem", color: "#888", fontWeight: "bold" }}>
+    Ghost
+  </span>
+  <Story of={ButtonStories.Ghost} />
+</div>
+
+  <div style={{ border: '1px solid #222', borderRadius: '8px', padding: '1rem', background: '#0e1217', display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center' }}>
+    <span style={{ fontSize: '0.8rem', color: '#888', fontWeight: 'bold' }}>Link</span>
+    <Story of={ButtonStories.Link} />
+  </div>
+</div>
+
+---
+
+## Advanced Usage: `asChild`
+
+By applying the `asChild` prop, the component will pass all styling, states, and action listeners onto its direct child. This is highly useful when using client-side routing libraries like Next.js `Link` or standard `<a>` tags.
+
+For example, this story renders the button as an anchor tag:
+
+<Canvas of={ButtonStories.AsChildLink} />
+
+```tsx
+import { Button } from "@mr-stash/ui"
+
+// Renders: <a href="https://google.com" class="border border-input bg-background ...">Google</a>
+;<Button asChild variant="outline">
+  <a href="https://google.com">Google</a>
+</Button>
+``` */}

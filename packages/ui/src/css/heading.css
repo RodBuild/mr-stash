@@ -1,0 +1,17 @@
+@theme {
+  --text-heading-xl: 3.5rem; /* 56px */
+  --text-heading-xl--line-height: 4rem;
+  --text-heading-xl--font-weight: 800;
+
+  --text-heading-lg: 3rem; /* 48px */
+  --text-heading-lg--line-height: 3.5rem;
+  --text-heading-lg--font-weight: 700;
+
+  --text-heading-md: 2rem; /* 32px */
+  --text-heading-md--line-height: 2.5rem;
+  --text-heading-md--font-weight: 700;
+
+  --text-heading-sm: 1.5rem; /* 24px */
+  --text-heading-sm--line-height: 2rem;
+  --text-heading-sm--font-weight: 650;
+}

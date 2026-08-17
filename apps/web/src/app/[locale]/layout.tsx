@@ -5,7 +5,6 @@ import { LocaleProvider } from "@/context/LocaleContext"
 import { MainHeader } from "@/components/MainHeader"
 import { Footer } from "@/components/Footer"
 import { FlagsProvider } from "@/context/Flags"
-import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 
 interface LocaleLayoutProps {
   children: React.ReactNode
@@ -13,8 +12,9 @@ interface LocaleLayoutProps {
 }
 
 import { cookies } from "next/headers"
+import { notFound } from "next/navigation"
 
-import { getDir } from "@/i18n/settings"
+import { getDir, isLocaleCode } from "@/i18n/settings"
 import { DirectionWrapper } from "@/components/DirectionWrapper"
 
 export default async function LocaleLayout({
@@ -22,19 +22,35 @@ export default async function LocaleLayout({
   params,
 }: LocaleLayoutProps) {
   const locale = (await params)?.locale
+
+  if (!isLocaleCode(locale)) {
+    notFound()
+  }
+
   const cookieStore = await cookies()
-  const theme = cookieStore.get(APPEARANCE_COOKIE)?.value || "light"
+  const appearanceCookie = cookieStore.get(APPEARANCE_COOKIE)?.value
+  const appearance =
+    appearanceCookie === "light" ||
+    appearanceCookie === "dark" ||
+    appearanceCookie === "system"
+      ? appearanceCookie
+      : "system"
+  const initialResolvedAppearance = appearance === "dark" ? "dark" : "light"
   const dir = getDir(locale)
 
   return (
-    <html data-theme={theme} lang={locale} dir={dir} suppressHydrationWarning>
+    <html
+      data-theme={initialResolvedAppearance}
+      lang={locale}
+      dir={dir}
+      suppressHydrationWarning
+    >
       <body className="flex min-h-screen flex-col bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
         <DirectionWrapper locale={locale}>
           <FlagsProvider>
-            <ThemeSwitcher />
-            <AppearanceProvider initialAppearance={theme as "light" | "dark"}>
+            <AppearanceProvider initialAppearance={appearance}>
               <LocaleProvider>
-                <MainHeader />
+                <MainHeader locale={locale} />
                 <div className="flex-1">{children}</div>
                 <Footer />
               </LocaleProvider>

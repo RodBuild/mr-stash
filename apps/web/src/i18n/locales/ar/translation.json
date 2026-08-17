@@ -1,4 +1,25 @@
 {
   "h1": "مرحبًا بكم في Mr. Stash",
-  "title": "مرحبًا بكم في Mr. Stash"
+  "title": "مرحبًا بكم في Mr. Stash",
+  "mainHeader": {
+    "search": {
+      "button": "بحث",
+      "dialogLabel": "البحث عن منتجات",
+      "placeholder": "البحث عن منتجات",
+      "close": "إغلاق البحث",
+      "empty": "ابدأ الكتابة للبحث عن منتجات.",
+      "pending": "ستظهر نتائج البحث هنا."
+    },
+    "language": {
+      "menuLabel": "اللغة",
+      "current": "اللغة الحالية"
+    },
+    "theme": {
+      "current": "المظهر الحالي",
+      "toggleTo": "التبديل إلى",
+      "light": "فاتح",
+      "dark": "داكن",
+      "system": "النظام"
+    }
+  }
 }

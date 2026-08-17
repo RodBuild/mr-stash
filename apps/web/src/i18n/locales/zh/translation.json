@@ -1,4 +1,25 @@
 {
   "h1": "欢迎来到 Mr. Stash",
-  "title": "欢迎来到 Mr. Stash"
+  "title": "欢迎来到 Mr. Stash",
+  "mainHeader": {
+    "search": {
+      "button": "搜索",
+      "dialogLabel": "搜索商品",
+      "placeholder": "搜索商品",
+      "close": "关闭搜索",
+      "empty": "开始输入以搜索商品。",
+      "pending": "搜索结果将显示在这里。"
+    },
+    "language": {
+      "menuLabel": "语言",
+      "current": "当前语言"
+    },
+    "theme": {
+      "current": "当前主题",
+      "toggleTo": "切换到",
+      "light": "浅色",
+      "dark": "深色",
+      "system": "跟随系统"
+    }
+  }
 }

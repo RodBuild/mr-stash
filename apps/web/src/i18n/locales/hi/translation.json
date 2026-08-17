@@ -1,4 +1,25 @@
 {
   "h1": "Mr. Stash में आपका स्वागत है",
-  "title": "Mr. Stash में आपका स्वागत है"
+  "title": "Mr. Stash में आपका स्वागत है",
+  "mainHeader": {
+    "search": {
+      "button": "खोजें",
+      "dialogLabel": "उत्पाद खोजें",
+      "placeholder": "उत्पाद खोजें",
+      "close": "खोज बंद करें",
+      "empty": "उत्पाद खोजने के लिए लिखना शुरू करें।",
+      "pending": "खोज परिणाम यहाँ दिखाई देंगे।"
+    },
+    "language": {
+      "menuLabel": "भाषा",
+      "current": "वर्तमान भाषा"
+    },
+    "theme": {
+      "current": "वर्तमान थीम",
+      "toggleTo": "इस पर बदलें",
+      "light": "लाइट",
+      "dark": "डार्क",
+      "system": "सिस्टम"
+    }
+  }
 }

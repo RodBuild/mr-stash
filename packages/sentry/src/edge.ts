@@ -1,20 +1,13 @@
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from "@sentry/nextjs"
+import { getSentryEnvironment } from "./environment"
 
-const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
-
-if (SENTRY_DSN) {
+if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
   Sentry.init({
-    dsn: SENTRY_DSN,
-
-    // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
-    tracesSampleRate: 1.0,
-
-    // Enable logs to be sent to Sentry
+    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    environment: getSentryEnvironment(),
+    tracesSampleRate: process.env.NODE_ENV === "development" ? 1.0 : 0.1,
     enableLogs: true,
-
-    // Enable sending user PII (Personally Identifiable Information)
-    sendDefaultPii: true,
-  });
+  })
 } else {
-  console.warn("Sentry DSN not found. Sentry edge monitoring is disabled.");
+  console.warn("Sentry DSN not found. Sentry edge monitoring is disabled.")
 }

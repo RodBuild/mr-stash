@@ -1,12 +1,21 @@
 "use client"
 
-import React, { createContext, useContext, useEffect, useState } from "react"
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import { APPEARANCE_COOKIE } from "@/config/constants"
 
-type Appearance = "light" | "dark"
+export type Appearance = "light" | "dark" | "system"
+export type ResolvedAppearance = Exclude<Appearance, "system">
 
 interface AppearanceContextType {
   appearance: Appearance
+  resolvedAppearance: ResolvedAppearance
   setAppearance: (appearance: Appearance) => void
 }
 
@@ -19,61 +28,68 @@ export function AppearanceProvider({
   initialAppearance,
 }: {
   children: React.ReactNode
-  initialAppearance?: Appearance
+  initialAppearance: Appearance
 }) {
-  const [appearance, setAppearanceState] = useState<Appearance>(
-    initialAppearance || "light",
+  const [appearance, setAppearanceState] =
+    useState<Appearance>(initialAppearance)
+  const [resolvedAppearance, setResolvedAppearance] =
+    useState<ResolvedAppearance>(
+      initialAppearance === "dark" ? "dark" : "light",
+    )
+
+  const resolveAppearance = useCallback(
+    (value: Appearance): ResolvedAppearance => {
+      if (value !== "system") {
+        return value
+      }
+
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
+    },
+    [],
   )
 
-  // 1. Initial Load Logic - Sync with LS if needed, but respect server initialAppearance
+  const applyAppearance = useCallback(
+    (newAppearance: Appearance) => {
+      const resolved = resolveAppearance(newAppearance)
+
+      setResolvedAppearance(resolved)
+      document.documentElement.dataset.theme = resolved
+    },
+    [resolveAppearance],
+  )
+
   useEffect(() => {
-    const stored = localStorage.getItem(APPEARANCE_COOKIE)
-    if (
-      !initialAppearance &&
-      stored &&
-      (stored === "light" || stored === "dark")
-    ) {
-      setAppearanceState(stored)
-      document.cookie = `${APPEARANCE_COOKIE}=${stored}; path=/; max-age=31536000`
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+    const syncAppearance = () => applyAppearance(appearance)
+
+    syncAppearance()
+
+    if (appearance !== "system") {
+      return
     }
-  }, [initialAppearance])
 
-  // 2. Sync with localStorage and DOM and Cookie
-  const setAppearance = (newAppearance: Appearance) => {
-    setAppearanceState(newAppearance)
-    localStorage.setItem(APPEARANCE_COOKIE, newAppearance)
-    document.documentElement.dataset.theme = newAppearance
-    document.cookie = `${APPEARANCE_COOKIE}=${newAppearance}; path=/; max-age=31536000`
-  }
+    mediaQuery.addEventListener("change", syncAppearance)
+    return () => mediaQuery.removeEventListener("change", syncAppearance)
+  }, [appearance, applyAppearance])
 
-  // 3. MutationObserver for external changes (robustness)
-  useEffect(() => {
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (
-          mutation.type === "attributes" &&
-          mutation.attributeName === "data-theme"
-        ) {
-          const currentAttr = document.documentElement.dataset.theme
-          if (currentAttr === "light" || currentAttr === "dark") {
-            if (currentAttr !== appearance) {
-              setAppearance(currentAttr as Appearance)
-            }
-          }
-        }
-      })
-    })
+  const setAppearance = useCallback(
+    (newAppearance: Appearance) => {
+      applyAppearance(newAppearance)
+      setAppearanceState(newAppearance)
+      document.cookie = `${APPEARANCE_COOKIE}=${newAppearance}; path=/; max-age=31536000; samesite=lax`
+    },
+    [applyAppearance],
+  )
 
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    })
-
-    return () => observer.disconnect()
-  }, [appearance])
+  const value = useMemo(
+    () => ({ appearance, resolvedAppearance, setAppearance }),
+    [appearance, resolvedAppearance, setAppearance],
+  )
 
   return (
-    <AppearanceContext.Provider value={{ appearance, setAppearance }}>
+    <AppearanceContext.Provider value={value}>
       {children}
     </AppearanceContext.Provider>
   )

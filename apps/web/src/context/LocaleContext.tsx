@@ -2,11 +2,17 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { useParams, usePathname, useRouter } from "next/navigation"
-import { cookieName, fallbackLng, languages } from "@/i18n/settings"
+import {
+  cookieName,
+  fallbackLng,
+  isLocaleCode,
+  languages,
+  type LocaleCode,
+} from "@/i18n/settings"
 
 interface LocaleContextType {
-  locale: string
-  changeLocale: (newLocale: string) => void
+  locale: LocaleCode
+  changeLocale: (newLocale: LocaleCode) => void
 }
 
 const LocaleContext = createContext<LocaleContextType | undefined>(undefined)
@@ -16,8 +22,11 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const pathname = usePathname()
 
-  // Use params.locale if available, otherwise fallback
-  const currentLocale = (params?.locale as string) || fallbackLng
+  const routeLocale = params?.locale
+  const currentLocale =
+    typeof routeLocale === "string" && isLocaleCode(routeLocale)
+      ? routeLocale
+      : fallbackLng
 
   const [locale, setLocale] = useState(currentLocale)
 
@@ -31,7 +40,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     // This runs on mount. If cookie is missing but LS has a preference, we set cookie and reload.
     // This fixes the "first visit" issue if user cleared cookies but not LS.
     const stored = localStorage.getItem(cookieName)
-    if (stored && languages.includes(stored) && stored !== currentLocale) {
+    if (stored && isLocaleCode(stored) && stored !== currentLocale) {
       // If we are on /en but stored is /es, we should probably redirect?
       // Or we just update the cookie so next refresh is correct.
       // Let's rely on user action to change types, but ensure cookie matches LS on load.
@@ -43,7 +52,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     document.cookie = `${cookieName}=${currentLocale}; path=/`
   }, [currentLocale, locale])
 
-  const changeLocale = (newLocale: string) => {
+  const changeLocale = (newLocale: LocaleCode) => {
     if (!languages.includes(newLocale)) return
 
     // 1. Update State

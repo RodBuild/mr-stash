@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import acceptLanguage from "accept-language-parser"
-import { fallbackLng, languages, cookieName } from "./i18n/settings"
+import {
+  fallbackLng,
+  languages,
+  cookieName,
+  isLocaleCode,
+} from "./i18n/settings"
 import { isBlockedCrawler } from "./config/crawler-policy"
 
 const aiOptOutHeader = "noai, noimageai"
@@ -14,7 +19,7 @@ function withCrawlerPolicyHeaders(response: NextResponse) {
 export const config = {
   // Matcher ignoring framework assets and root metadata files.
   matcher: [
-    "/((?!api|_next/static|_next/image|assets|favicon.ico|robots.txt|sitemap.xml|sw.js).*)",
+    "/((?!api|_next/static|_next/image|assets|favicon\\.ico|icon\\.svg|robots\\.txt|sitemap\\.xml|sw\\.js|\\.well-known).*)",
   ],
 }
 
@@ -38,11 +43,10 @@ export function middleware(req: NextRequest) {
     )
   if (!lng) lng = fallbackLng
 
-  // Redirect if lng in path is not supported
-  if (
-    !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
-    !req.nextUrl.pathname.startsWith("/_next")
-  ) {
+  const [, routeLocale] = req.nextUrl.pathname.split("/")
+
+  // Redirect requests without a supported locale as their first path segment.
+  if (!isLocaleCode(routeLocale)) {
     return withCrawlerPolicyHeaders(
       NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url)),
     )

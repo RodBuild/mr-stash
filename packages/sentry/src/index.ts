@@ -1,19 +1,22 @@
-import { withSentryConfig } from "@sentry/nextjs";
+import { withSentryConfig } from "@sentry/nextjs"
 
 // Re-export all standard Sentry utilities (captureException, captureMessage, etc.)
-export * from "@sentry/nextjs";
+export * from "@sentry/nextjs"
 
 /**
  * Reusable wrapper for Next.js configs inside the monorepo.
  * Centralizes standard build-time configurations for Sentry.
  */
-export function withSharedSentryConfig(nextConfig: any) {
+export function withSharedSentryConfig(
+  nextConfig: Parameters<typeof withSentryConfig>[0],
+) {
   return withSentryConfig(nextConfig, {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
 
     org: process.env.SENTRY_ORG,
     project: process.env.SENTRY_PROJECT,
+    authToken: process.env.SENTRY_AUTH_TOKEN,
 
     // Only print logs for uploading source maps in CI
     silent: !process.env.CI,
@@ -34,5 +37,5 @@ export function withSharedSentryConfig(nextConfig: any) {
         removeDebugLogging: true,
       },
     },
-  });
+  })
 }

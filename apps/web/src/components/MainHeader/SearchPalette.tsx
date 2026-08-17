@@ -13,6 +13,7 @@ interface SearchPaletteProps {
 
 export function SearchPalette({ labels, onClose, open }: SearchPaletteProps) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const paletteRef = useRef<HTMLElement>(null)
   const [query, setQuery] = useState("")
 
   useEffect(() => {
@@ -30,21 +31,36 @@ export function SearchPalette({ labels, onClose, open }: SearchPaletteProps) {
       }
     }
 
+    const closeOnOutsidePointerDown = (event: PointerEvent) => {
+      const palette = paletteRef.current
+      if (
+        palette &&
+        event.target instanceof Node &&
+        !palette.contains(event.target)
+      ) {
+        onClose()
+      }
+    }
+
     document.addEventListener("keydown", closeOnEscape)
-    return () => document.removeEventListener("keydown", closeOnEscape)
+    document.addEventListener("pointerdown", closeOnOutsidePointerDown)
+
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape)
+      document.removeEventListener("pointerdown", closeOnOutsidePointerDown)
+    }
   }, [onClose, open])
 
   if (!open) return null
 
   return (
     <>
-      <button
-        type="button"
-        aria-label={labels.close}
+      <div
+        aria-hidden="true"
         className="fixed inset-x-0 top-16 bottom-0 z-40 cursor-default bg-black/20 backdrop-blur-[1px]"
-        onClick={onClose}
       />
       <section
+        ref={paletteRef}
         aria-label={labels.dialogLabel}
         aria-modal="true"
         className="bg-popover animate-in fade-in zoom-in-95 fixed top-[18vh] left-1/2 z-50 w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 overflow-hidden rounded-xl border shadow-xl duration-150"

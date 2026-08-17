@@ -23,7 +23,7 @@ export const config = {
   ],
 }
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   if (isBlockedCrawler(req.headers.get("user-agent"))) {
     return withCrawlerPolicyHeaders(
       new NextResponse("Crawler access denied", { status: 403 }),

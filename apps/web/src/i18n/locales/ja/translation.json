@@ -1,4 +1,25 @@
 {
   "h1": "Mr. Stashへようこそ",
-  "title": "Mr. Stashへようこそ"
+  "title": "Mr. Stashへようこそ",
+  "mainHeader": {
+    "search": {
+      "button": "検索",
+      "dialogLabel": "商品を検索",
+      "placeholder": "商品を検索",
+      "close": "検索を閉じる",
+      "empty": "入力して商品を検索します。",
+      "pending": "検索結果がここに表示されます。"
+    },
+    "language": {
+      "menuLabel": "言語",
+      "current": "現在の言語"
+    },
+    "theme": {
+      "current": "現在のテーマ",
+      "toggleTo": "切り替え先",
+      "light": "ライト",
+      "dark": "ダーク",
+      "system": "システム"
+    }
+  }
 }

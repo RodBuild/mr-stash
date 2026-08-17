@@ -1,6 +1,7 @@
 "use client" // Error boundaries must be Client Components
 
 import { useEffect } from "react"
+import * as Sentry from "@mr-stash/sentry"
 
 export default function ErrorBoundary({
   error,
@@ -10,8 +11,7 @@ export default function ErrorBoundary({
   reset: () => void
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service here (e.g. Sentry)
-    console.error("Caught by Next.js Error Boundary:", error)
+    Sentry.captureException(error)
   }, [error])
 
   return (

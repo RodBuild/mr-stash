@@ -21,15 +21,15 @@
     "@mr-stash/icons": "*"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "^10.0.0",
-    "@storybook/react": "^10.0.0",
-    "@storybook/react-vite": "^10.0.0",
+    "@storybook/addon-docs": "^10.5.4",
+    "@storybook/react": "^10.5.4",
+    "@storybook/react-vite": "^10.5.4",
     "@tailwindcss/vite": "^4",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "react": "^19",
     "react-dom": "^19",
-    "storybook": "^10.0.0",
+    "storybook": "^10.5.4",
     "tailwindcss": "^4",
     "vite": "^6"
   }

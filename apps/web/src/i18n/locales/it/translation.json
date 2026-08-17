@@ -1,4 +1,25 @@
 {
   "h1": "Benvenuti a Mr. Stash",
-  "title": "Benvenuti a Mr. Stash"
+  "title": "Benvenuti a Mr. Stash",
+  "mainHeader": {
+    "search": {
+      "button": "Cerca",
+      "dialogLabel": "Cerca prodotti",
+      "placeholder": "Cerca prodotti",
+      "close": "Chiudi ricerca",
+      "empty": "Inizia a digitare per cercare prodotti.",
+      "pending": "I risultati della ricerca appariranno qui."
+    },
+    "language": {
+      "menuLabel": "Lingua",
+      "current": "Lingua corrente"
+    },
+    "theme": {
+      "current": "Tema corrente",
+      "toggleTo": "Passa a",
+      "light": "Chiaro",
+      "dark": "Scuro",
+      "system": "Sistema"
+    }
+  }
 }
